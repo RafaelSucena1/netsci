@@ -9,64 +9,84 @@ Created on Mon Apr  4 11:59:34 2022
 import random
 import matplotlib.pyplot as plt
 
+
+class Vertex:
+    def __init__(self, index):
+        self.__index = index
+        self.__edges = []
+
+    def nextVertices(self):
+        vertices = []
+        for edge in self.__edges:
+            vertices.append(edge.end())
+        return vertices
+
+    def addEdge(self, edge):
+        if not edge in self.__edges:
+            self.__edges.append(edge)
+
+    def getIndex(self):
+        return self.__index
+
+
+class Edge:
+    def __init__(self, start, end):
+        self.__start = start
+        self.__end = end
+
+    def end(self):
+        return self.__end
+
+    def start(self):
+        return self.__start
+
+
 class Graph:
-    edges = {}
-    n = 0
-    p = 0
-    
-    def __init__(self, n, p):
-        self.n = n
-        self.p = p
-        self.degrees = [0] * n
-        
-    def addEdge(self, i, j):
-        self.edges[i].append(j)
-    
-    def __initializeNode(self, i):
-        self.edges[i] = []
-        
-    def clear(self):
-        self.edges.clear()
-        
+    __n = 0
+    __p = 0
+    __vertices = {}
+
+    """
+    helper function for the import of the graph
+    it initializes the dictionary of vertices
+    """
+
+    def __prepareVertices(self):
+        for i in range(1, self.__n + 1):
+            vtx = Vertex(i)
+            self.__vertices[i] = vtx
+
+    """
+    helper function for the import of the edges
+    it accepts two indexes: for the two vertices
+    and adds an edge to the graph
+    """
+
+    def __addEdge(self, index_i, index_j):
+        vertex_i = self.__vertices[index_i]
+        vertex_j = self.__vertices[index_j]
+        edge = Edge(vertex_i, vertex_j)
+        vertex_i.addEdge(edge)
+
     def __yes(self):
-        return random.uniform(0, 1) > self.p
-    
-    def update(self):
-        for i in range(1, self.n + 1):
-            self.__initializeNode(i)
+        return random.uniform(0, 1) > self.__p
+
+    def __init__(self, p, n):
+        self.__n = n
+        self.__p = p
+        self.__prepareVertices()
+        for i in range(1, self.__n + 1):
             for j in range(1, i):
-                if self.__yes(): 
-                    self.degrees[i] = self.degrees[i] + 1
-                    self.degrees[j] = self.degrees[j] + 1
-                    self.addEdge(i, j)                    
-                    
+                if self.__yes():
+                    self.__addEdge(i, j)
+
     def printG(self):
-        for start in self.edges.keys():
-            for end in self.edges[start]:
-                print(str(start) + " " + str(end))
-                
-                
-    def plotDegree(self):
-        plt.bar(range(1, self.n), self.degrees)
-  
-    def plotNumberNodesWithK(self):
-        Ks = [0] * self.n
-        for i in range(1, self.n + 1):
-            Ks[self.degrees[i]] = Ks[self.degrees[i]] + 1
-        plt.bar(range(0, self.n), Ks)
-
-       
+        for start in self.__vertices.values():
+            print("%d" % (start.getIndex()))
+            for end in start.nextVertices():
+                print("%d %d" % (start.getIndex(), end.getIndex()))
 
 
-
-
-
-        
-graph = Graph(100, 0.9)
-graph.update()
-
-graph.printG()
-
-                    
-                    
-                
+if __name__ == '__main__':
+    graph = Graph(1, 100)
+    graph.printG()

@@ -85,7 +85,7 @@ class Graph:
         edge = Edge(vertex_i, vertex_j)
         vertex_i.addEdge(edge)
         self.__edges.add(edge)
-
+        print("i: %d, j: %d" %(index_i, index_j))
 
 
     """
@@ -115,7 +115,6 @@ class Graph:
     def tarjan(self):
         for (index, vertex) in self.__vertices.items():
             if vertex.getIndex() is None:
-                print("in index: %d" % (index))
                 self.__strongConnect(vertex)
 
 
@@ -154,12 +153,13 @@ class Graph:
             self.__connectedComponents.append(newSCC)
 
 
-
+    def printStats(self):
+        print("Number of SCCs: %d" % (len(self.__connectedComponents)))
 
 
 if __name__ == '__main__':
     graph = Graph()
-    graph.importGraph("random1.txt")
+    graph.importGraph("rd3")
     graph.tarjan()
     x = 2
 
