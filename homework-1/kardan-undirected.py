@@ -24,7 +24,10 @@ class Vertex:
     def nextVertices(self):
         vertices = []
         for edge in self.__edges:
-            vertices.append(edge.end())
+            if edge.end() == self:
+                vertices.append(edge.start())
+            else:
+                vertices.append(edge.end())
         return vertices
 
     def addEdge(self, edge):
@@ -87,9 +90,12 @@ class Graph:
         if random.uniform(0, 1) < 0.5:
             edge = Edge(vertex_i, vertex_j)
             vertex_i.addEdge(edge)
+            vertex_j.addEdge(edge)
         else:
             edge = Edge(vertex_j, vertex_i)
             vertex_j.addEdge(edge)
+            vertex_i.addEdge(edge)
+
 
     def __yes(self):
         return random.uniform(0, 1) < self.__p
@@ -210,5 +216,5 @@ def getSizesGiantComponents():
     plt.show()
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(1500)
+    sys.setrecursionlimit(2000)
     getSizesGiantComponents()

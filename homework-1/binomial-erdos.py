@@ -65,11 +65,15 @@ class Graph:
     def __addEdge(self, index_i, index_j):
         vertex_i = self.__vertices[index_i]
         vertex_j = self.__vertices[index_j]
-        edge = Edge(vertex_i, vertex_j)
-        vertex_i.addEdge(edge)
+        if random.uniform(0, 1) < 0.5:
+            edge = Edge(vertex_i, vertex_j)
+            vertex_i.addEdge(edge)
+        else:
+            edge = Edge(vertex_j, vertex_i)
+            vertex_j.addEdge(edge)
 
     def __yes(self):
-        return random.uniform(0, 1) > self.__p
+        return random.uniform(0, 1) < self.__p
 
     def __init__(self, p, n):
         self.__n = n
@@ -82,11 +86,10 @@ class Graph:
 
     def printG(self):
         for start in self.__vertices.values():
-            print("%d" % (start.getIndex()))
             for end in start.nextVertices():
                 print("%d %d" % (start.getIndex(), end.getIndex()))
 
 
 if __name__ == '__main__':
-    graph = Graph(1, 100)
+    graph = Graph(0.09, 100)
     graph.printG()
