@@ -191,6 +191,11 @@ class Graph:
         self.tarjan()
         return max(self.getConnectedComponentsSize())
 
+    def printG(self):
+        for start in self.__vertices.values():
+            for end in start.nextVertices():
+                print("%d %d" % (start.getIndex(), end.getIndex()))
+
 
 def getSizesGiantComponents():
     n = 2000
@@ -210,5 +215,5 @@ def getSizesGiantComponents():
     plt.show()
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(1500)
-    getSizesGiantComponents()
+    graph = Graph()
+    printG()
