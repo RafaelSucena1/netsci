@@ -1,0 +1,21 @@
+------------------------------------------
+gtrieScanner (version 0.1)
+------------------------------------------
+Subgraph Size: 3
+Graph File: ./networks/results.txt
+Directed, 0 Nodes, 0 Edges
+Method:     GTRIE with file containing complete g-trie
+
+Counting subgraph frequency on 'ORIGINAL NETWORK'
+Reading G-Trie
+Creation time: 0.00
+Compression rate = 56.41%
+
+0 subgraphs, 0 occurrences
+Time elapsed: 0.000161s
+
+Computing random networks: ....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+Avg time per random network: 0.000000s
+
+Raw results written to file "raw.txt" [NetSci Homework]
+Results written to file "results.txt"
